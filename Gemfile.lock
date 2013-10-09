@@ -1,16 +1,10 @@
-GIT
-  remote: https://github.com/scottweaver/logging-facade.git
-  revision: 4037c16b57e049892f88db905524891d8e638f03
-  specs:
-    logging-facade (0.0.1)
-
 PATH
   remote: .
   specs:
-    ruby-sapjco (1.4.0)
+    ruby-sapjco (1.5.0)
       haml
       launchy
-      logging-facade
+      logging
 
 GEM
   remote: https://rubygems.org/
@@ -23,6 +17,10 @@ GEM
       addressable (~> 2.3)
       ffi (~> 1.1.1)
       spoon (~> 0.0.1)
+    little-plugger (1.1.3)
+    logging (1.8.1)
+      little-plugger (>= 1.1.3)
+      multi_json (>= 1.3.6)
     multi_json (1.5.0)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
@@ -44,7 +42,6 @@ PLATFORMS
 DEPENDENCIES
   haml
   launchy
-  logging-facade!
   rspec
   ruby-sapjco!
   simplecov

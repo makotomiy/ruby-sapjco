@@ -1,12 +1,11 @@
 require_relative "../spec_helper.rb"
 require 'ruby-sapjco'
-require "yaml"
-
+require 'yaml'
 
 describe SapJCo::RubyDestinationDataProvider do
-  it "should convert YAML to java.util.Properties" do
+  it "should have destination properties filled correctly" do
     ddp = SapJCo::RubyDestinationDataProvider.new(SapJCo::Configuration.configuration)
-    props = ddp.get_destination_properties('test')
+    props = ddp.get_destination_properties(SapJCo::Configuration.configuration['default_destination'])
     # You should define an Expectations class in your /spec/spec_helper.rb to match what ever you
     # have in your /config.yml (which you also need to create)
 
@@ -37,7 +36,7 @@ describe SapJCo::Function do
 
       out = func.execute
       expect(out[:RFCSI_EXPORT]).to_not be nil
-      expect(out[:RFCSI_EXPORT][:RFCHOST2]).to eq 'saperqapp1'
+      expect(out[:RFCSI_EXPORT][:RFCHOST2]).to eq EXPECTATIONS[:rfchost]
     end
 
     it "should handle output tables correctly" do
@@ -46,29 +45,6 @@ describe SapJCo::Function do
       out = func.execute
       expect(out[:COMPANYCODE_LIST].class).to eq Array
       expect(out[:COMPANYCODE_LIST][0][:COMP_CODE]).to eq EXPECTATIONS[:company_code_0]
-    end
-
-    it "should handle input tables correctly" do
-      rfc =  SapJCo::Function.new(:Z_CUSTOMER_BY_BUSINESS_PARTNER)
-
-      out = rfc.execute do |params, tables|
-        tables[:CUST_QUERY_DATA]=[{INSTALL: '0001037873'}]
-      end
-
-      expect(out[:CUST_DATA_OUT].length).to eq(1)    
-      expect(out[:CUST_DATA_OUT][0][:REGION]).to eq 'NSW'
-      expect(out[:CUST_DATA_OUT][0][:COUNTRY]).to eq 'AU'
-
-      expect(out[:CUST_PARTNER_OUT].length).to eq(10)    
-      expect(out[:CUST_PARTNER_OUT][5][:BUS_PARTNER_TYPE]).to eq("WE")
-      expect(out[:CUST_PARTNER_OUT][5][:SALES_ORG]).to eq("1510")
-
-      expect(out[:CUST_SALES_OUT].length).to eq(1)    
-      expect(out[:CUST_SALES_OUT][0][:CUST_GROUP]).to eq("00")
-      expect(out[:CUST_SALES_OUT][0][:SALES_GROUP]).to eq("062")
-
-      out = rfc.execute({}, {CUST_QUERY_DATA: [{INSTALL: '0001037873'}]})
-      expect(out[:CUST_PARTNER_OUT].length).to eq(10)   
     end
   end
 

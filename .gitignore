@@ -17,3 +17,5 @@ config/sapjco.yml.example.orig
 *.orig
 config/sapjco.yml
 spec/ruby-sapjco/quick_spec.rb
+*.gem
+.ruby-version

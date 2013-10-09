@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'haml' 
   gem.add_dependency 'launchy'
-  gem.add_dependency 'logging-facade'
+  gem.add_dependency 'logging'
   
 
   gem.add_development_dependency('rspec')

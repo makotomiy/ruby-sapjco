@@ -1,15 +1,12 @@
 # require 'ruby-sapjco'
 require 'ruby-sapjco-config'
 require 'ruby-sapjco-assist'
-require 'logging-facade'
 require 'haml'
 require 'launchy'
 
 module SapJCo 
   class Function
-    include  LoggingFacade::Logger
-
-    def initialize(function_name, destination_name=SapJCo::Configuration.configuration[:default_destination])
+    def initialize(function_name, destination_name=SapJCo::Configuration.configuration['default_destination'])
       @function_name = function_name
       @destination_assistant = DestinationAssistant.new(destination_name)
       @func = @destination_assistant.destination.repository.get_function(@function_name.to_s)
@@ -49,7 +46,7 @@ module SapJCo
 
       File.open("#{@function_name}.html", "w") do |file|
         file.write html
-        logger.info "Help file path #{file.path}"        
+        SapJCo.log.info "Help file path #{file.path}"        
       end
 
       if open

@@ -62,6 +62,7 @@ module SapJCo
     def parse_sap_record_structure(field_list)
       out = Hash.new
       field_list.each do |field|
+        next if field.class.include?(com.sap.conn.jco.JCoRecordField) and not field.is_initialized?
         if field.value.class.include?(com.sap.conn.jco.JCoTable)
           table = field.get_table
           table_array = []

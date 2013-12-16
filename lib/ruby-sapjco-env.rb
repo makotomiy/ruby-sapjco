@@ -1,10 +1,10 @@
 require 'java'
-require 'logging'
+require 'logger'
 
 module SapJCo
   class << self
     def log
-      Logging.logger(STDOUT)
+      Logger.new(STDOUT)
     end
   end
 end

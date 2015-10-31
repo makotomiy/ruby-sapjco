@@ -81,7 +81,12 @@ module SapJCo
     
     def hash_into_jco_record(hash, jco_record)
       hash.each do |key, value|
-        jco_record.set_value(key.to_s, value)
+        case jco_record.get_meta_data.get_type_as_string(key.to_s)
+          when "STRUCTURE"
+            hash_into_jco_record(value, jco_record.get_structure(key.to_s))
+          else
+            jco_record.set_value(key.to_s, value)
+        end
       end
     end
 

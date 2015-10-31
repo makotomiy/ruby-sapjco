@@ -21,8 +21,8 @@ Gem::Specification.new do |gem|
   # gem.add_development_dependency('guard-rspec')
   # gem.add_development_dependency('rb-inotify')
   # gem.add_development_dependency('libnotify')
-  gem.add_development_dependency('haml')
-  gem.add_development_dependency('launchy')
+  # gem.add_development_dependency('haml')
+  # gem.add_development_dependency('launchy')
   gem.add_development_dependency('simplecov')
   
   

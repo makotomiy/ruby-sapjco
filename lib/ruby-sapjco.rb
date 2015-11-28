@@ -65,6 +65,7 @@ module SapJCo
         next if field.class.include?(com.sap.conn.jco.JCoRecordField) and not field.is_initialized?
         if field.value.class.include?(com.sap.conn.jco.JCoTable)
           table = field.get_table
+          next if table.empty?
           table_array = []
           begin
             table_array << parse_sap_record_structure(table)

@@ -62,7 +62,8 @@ module SapJCo
     def parse_sap_record_structure(field_list)
       out = Hash.new
       field_list.each do |field|
-        next if field.class.include?(com.sap.conn.jco.JCoRecordField) and not field.is_initialized?
+        next if not field.value.class.include?(com.sap.conn.jco.JCoTable) and 
+                field.class.include?(com.sap.conn.jco.JCoRecordField) and not field.is_initialized?
         if field.value.class.include?(com.sap.conn.jco.JCoTable)
           table = field.get_table
           next if table.empty?
@@ -143,12 +144,7 @@ module SapJCo
         info[:description] = param.description
         #info[:import?] = param.import?
         if param.fields?
-          fields = {}
-          info[:fields] = fields
-          param.each do |column|
-            fields[column.name.to_sym]={:type=>column.type,
-                                        :description=>column.description}
-          end
+          info[:fields] = parse_parameters(param)
         end
         out[param.name.to_sym]=info
       end unless parameter_list.nil?
